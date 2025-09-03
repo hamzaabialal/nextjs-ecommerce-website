@@ -40,3 +40,9 @@ nextjs-ecommerce-website/
 │── package.json # Dependencies
 │── tsconfig.json # TypeScript config
 │── next.config.ts # Next.js configuration
+
+
+## 📸 Screenshots
+
+### 🏠 Homepage
+![Homepage Screenshot](public/screenshots/homepage.png)
