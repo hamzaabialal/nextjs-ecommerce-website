@@ -1,13 +1,6 @@
-import { Schema, Document } from "mongoose";
-import { IProductField } from "@/types";
+import { Schema, model, models, InferSchemaType } from "mongoose";
 
-export interface IProduct extends Document, IProductField {
-  _id: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-const productSchema = new Schema<IProduct>(
+const productSchema = new Schema(
   {
     name: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
@@ -31,18 +24,15 @@ const productSchema = new Schema<IProduct>(
     ],
     numSales: { type: Number, required: true, default: 0 },
     isPublished: { type: Boolean, required: true, default: false },
-    reviews: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Review",
-        default: [],
-      },
-    ],
+    reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
   },
   { timestamps: true }
 );
 
+// Let Mongoose infer the type from schema
+export type IProduct = InferSchemaType<typeof productSchema>;
 
-const Product = (models.Product as Model<IProduct>) || model<IProduct>('Product', productSchema)
+const Product =
+  models.Product || model<IProduct>("Product", productSchema);
 
-export default Product
+export default Product;

@@ -11,7 +11,9 @@ if (!(global as any).mongoose) {
   (global as any).mongoose = cached;
 }
 
-export async function connectToDatabase(DATABASE_URL?: string) {
+export async function connectToDatabase() {
+  const DATABASE_URL = process.env.DATABASE_URL; // 👈 env se read karo
+
   if (!DATABASE_URL) {
     throw new Error("Database URL missing");
   }
@@ -22,12 +24,8 @@ export async function connectToDatabase(DATABASE_URL?: string) {
 
   if (!cached.promise) {
     cached.promise = mongoose.connect(DATABASE_URL, {
-      // Recommended options
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }).then((mongooseInstance) => {
-      return mongooseInstance;
-    });
+      dbName: "nextjs15-ecommerce", // 👈 ensure DB name fix hai
+    }).then((mongooseInstance) => mongooseInstance);
   }
 
   cached.conn = await cached.promise;

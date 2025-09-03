@@ -17,3 +17,21 @@ export const toSlug = (text: string): string =>
     .replace(/\s+/g, '-')
     .replace(/^-+|-+$/g, '')
     .replace(/-+/g, '-')
+
+const CURRENCY_FORMATTOR = new Intl.NumberFormat('en-PK', {
+  currency: "PKR",
+  style: 'currency',
+  minimumFractionDigits: 2
+})   
+
+
+export function currency_formate(amount: number){
+  return CURRENCY_FORMATTOR.format(amount)
+}
+
+
+const NUMBER_FORMATTOR = new Intl.NumberFormat('en-PK')
+
+export function number_formate(num: number){
+  return NUMBER_FORMATTOR.format(num)
+}
